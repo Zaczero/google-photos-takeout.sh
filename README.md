@@ -13,7 +13,7 @@ No javascript or any other bs.
 ## Usage
 
 1. Download and extract your [Google Photos Takeout](https://takeout.google.com/)
-2. Download the script and put it inside the `Takeout` folder
+2. Download [the script](https://github.com/Zaczero/google-photos-takeout.sh/raw/main/google-photos-takeout.sh) and put it inside the `Takeout` folder
 3. Run it
 
 ![Directory guide screenshot](./directory-screenshot.png)
