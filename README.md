@@ -1,6 +1,6 @@
 # A script that — just works!
 
-This script will fix the image and video metadata of the Google Photos Takeout, so that it can be used with other software.
+This script fixes the image and video metadata of Google Photos Takeout, so that it can be used with other software. It handles both the DateTimeOriginal and GPS EXIF fields.
 
 No javascript or any other bs.
 
