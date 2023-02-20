@@ -5,8 +5,9 @@ set -e
 shopt -s globstar
 
 # ensure dependencies are installed
-command -v jq >/dev/null 2>&1 || { echo >&2 "jq is not installed. Aborting."; exit 1; }
-command -v exiftool >/dev/null 2>&1 || { echo >&2 "exiftool is not installed. Aborting."; exit 1; }
+for cmd in exiftool jq; do
+  command -v "$cmd" >/dev/null 2>&1 || { echo >&2 "$cmd is not installed. Aborting."; exit 1; }
+done
 
 # change directory to the script directory
 cd "$(dirname "$0")"
