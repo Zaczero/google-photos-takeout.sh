@@ -12,8 +12,11 @@ done
 # change directory to the script directory
 cd "$(dirname "$0")"
 
-# array to store $fullpath for batch processing
-fullpaths=()
+# create temporary file to store file paths
+fullpaths=$(mktemp)
+
+# delete fullpaths on exit
+trap 'rm -f "$fullpaths"' EXIT
 
 # find all JSON files and enumerate over them
 files=(./**/*.json)
@@ -57,17 +60,18 @@ for i in "${!files[@]}"; do
     # set modification time from unix timestamp
     touch -m -t "$(date -d @"$timestamp" +%Y%m%d%H%M.%S)" "$fullpath"
 
-    # append to array
-    fullpaths+=("$fullpath")
+    # append to fullpaths file
+    echo "$fullpath" >> "$fullpaths"
 
   done
 done
 
 # deduplicate fullpaths (sort does not matter but is nice)
-readarray -t fullpaths < <(printf "%s\n" "${fullpaths[@]}" | sort -u)
+sort -u "$fullpaths" > "$fullpaths.tmp"
+mv "$fullpaths.tmp" "$fullpaths"
 
 # print fullpaths size
-echo "Found ${#fullpaths[@]} unique files to process"
+echo "Found $(wc -l < "$fullpaths") unique files to process"
 
 # ask for confirmation
 read -p "Looks correct? [y/N] " -n 1 -r
@@ -91,7 +95,7 @@ exiftool \
   -overwrite_original \
   -preserve \
   -progress \
-  "${fullpaths[@]}" || true
+  -@ "$fullpaths" || true
 
 # optional cleanup JSON files
 read -p "Delete all JSON files? [y/N] " -n 1 -r
