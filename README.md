@@ -6,7 +6,7 @@ No javascript or any other bs.
 
 ## Dependencies
 
-- bash _(yes, I know)_
+- bash
 - exiftool
 - jq
 
