@@ -102,5 +102,10 @@ read -p "Delete all JSON files? [y/N] " -n 1 -r
 printf "\n"
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  rm --verbose ./**/*.json
+  # confirm cleanup JSON files
+  read -p "Are you sure you want to delete all JSON files? [y/N] " -n 1 -r
+  printf "\n"
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    rm --verbose ./**/*.json
+  fi
 fi
