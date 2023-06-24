@@ -38,6 +38,21 @@ for i in "${!files[@]}"; do
   # get the directory of the JSON file
   directory=$(dirname "$file")
 
+  # check for a subscript, and begin special handling if found
+  if [[ $file =~ \(([0-9]+)\) ]]; then
+    subscript=${BASH_REMATCH[1]}
+    subscript_formatted="($subscript)"
+
+    # Get the filename without extension
+    filename_without_ext="${filename%.*}"
+
+    # Get the extension
+    extension="${filename##*.}"
+
+    # Insert the subscript before the extension
+    filename="${filename_without_ext}${subscript_formatted}.${extension}"
+  fi
+
   # iterate over the original and edited file
   for f in "$filename" "${filename%.*}-edited.${filename##*.}"; do
 
