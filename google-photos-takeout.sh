@@ -73,6 +73,11 @@ mv "$fullpaths.tmp" "$fullpaths"
 # print fullpaths size
 echo "Found $(wc -l < "$fullpaths") unique files to process"
 
+# Clear any previous input before the "read" command
+while read -t 0.1 -r -n 10000; do
+  continue
+done
+
 # ask for confirmation
 read -p "Looks correct? [y/N] " -n 1 -r
 printf "\n"
@@ -96,6 +101,11 @@ exiftool \
   -preserve \
   -progress \
   -@ "$fullpaths" || true
+
+# Clear any previous input before the "read" command
+while read -t 0.1 -r -n 10000; do
+  continue
+done
 
 # optional cleanup JSON files
 read -p "Delete all JSON files? [y/N] " -n 1 -r
