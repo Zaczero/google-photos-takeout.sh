@@ -115,5 +115,7 @@ read -p "Delete all JSON files? [y/N] " -n 1 -r
 printf "\n"
 
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  rm --verbose ./**/*.json
+  for file in "${files[@]}"; do
+    rm --verbose "$file"
+  done
 fi
